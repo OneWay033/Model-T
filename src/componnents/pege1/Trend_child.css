@@ -1,0 +1,102 @@
+/* พื้นหลังของหน้าเว็บ */
+body {
+  background-color: #F5F5F5; /* สีพื้นหลังอ่อน สะอาดตา */
+  color: #333; /* สีเทาเข้มสำหรับข้อความ */
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0; 
+  padding: 0;
+}
+
+/* Navbar (หรือเมนู) */
+.nav-Trend_child {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between; /* จัดวางให้มีระยะห่างระหว่างแต่ละลิงก์ */
+  color: #ffffff; /* สีเทาเข้มสำหรับข้อความ */
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 12px; /* มุมโค้งมนเพื่อความทันสมัย */
+  transition: color 0.3s ease;
+}
+
+.nav-Trend_child a {
+  text-decoration: none; /* ลบเส้นใต้ลิงก์ */
+  padding: 10px 15px;
+  color: #333;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-Trend_child a:hover {
+  background-color: #007BFF; /* สีฟ้าสำหรับการ hover */
+  color: #fff; /* สีขาวเมื่อ hover */
+}
+
+/* ปุ่ม */
+button {
+  padding: 10px 25px;
+  background-color: #007BFF; /* สีฟ้าสดใส */
+  color: white;
+  border: none; /* ลบขอบ */
+  border-radius: 25px; /* มุมโค้งมนสวยงาม */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงาเบาๆ */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3; /* สีฟ้าเข้มเมื่อ hover */
+  transform: translateY(-2px); /* เอฟเฟกต์ขยับขึ้นเมื่อ hover */
+}
+
+/* Title */
+.title {
+  display: flex;
+  justify-content: center;
+  color: #333;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase; /* เปลี่ยนข้อความเป็นตัวใหญ่ทั้งหมด */
+}
+
+/* Table */
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.custom-table {
+  width: 90%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เงาเบาๆ */
+  background-color: #fff; /* สีพื้นหลังของตารางเป็นสีขาว */
+}
+
+.custom-table th, .custom-table td {
+  padding: 15px 20px;
+  border: 1px solid #ddd;
+}
+
+.custom-table thead {
+  background-color: #007BFF; /* สีฟ้าสำหรับหัวตาราง */
+  color: white; /* สีขาวสำหรับข้อความในหัวตาราง */
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* สีเทาอ่อนสำหรับแถวคู่ */
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f1f1f1; /* เปลี่ยนสีพื้นหลังเป็นสีอ่อนเมื่อ hover */
+}
+
+

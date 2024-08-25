@@ -1,0 +1,90 @@
+/* เปลี่ยนจาก body เป็นคลาสเฉพาะ */
+.popup-page {
+    font-family: 'Arial', sans-serif;
+    background-color: #FAFAFA;
+    margin: 10px;
+    padding: 0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+/* Background Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Popup */
+.popup {
+    background-color: #FFFFFF;
+    padding: 30px; /* เพิ่ม padding รอบๆ เนื้อหา */
+    border-radius: 10px; /* เพิ่มการโค้งของมุม */
+    width: 50%; /* ตั้งความกว้างให้เป็น 50% ของหน้าจอ */
+    max-width: 700px; /* กำหนดความกว้างสูงสุดให้ไม่เกิน 700px */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้ดูมีมิติ */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* ให้สามารถเลื่อนดูเนื้อหาภายในได้หากเนื้อหาเกินความสูงที่กำหนด */
+    max-height: 90vh; /* กำหนดความสูงสูงสุดเป็น 90% ของหน้าจอ */
+}
+
+.popup h2 {
+    margin-top: 0;
+    color: #444;
+    text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
+}
+
+.form-group {
+    margin-bottom: 20px; /* เพิ่มระยะห่างระหว่างฟิลด์ */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.form-group input, .form-group select {
+    width: 100%; /* ทำให้ฟิลด์เต็มความกว้างของพื้นที่ที่มี */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* เพิ่มระยะห่างจากฟิลด์ด้านบน */
+}
+
+.form-buttons button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-buttons .cancel {
+    background-color: #F44336;
+    color: white;
+}
+
+.form-buttons .submit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
