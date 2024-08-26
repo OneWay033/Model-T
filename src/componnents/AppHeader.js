@@ -1,28 +1,15 @@
-import axios from 'axios';
+import React from 'react';
+import Button from './Button';
 import './AppHeader.css';
-import { useState, useEffect } from 'react';
 
 function AppHeader() {
-  // const [dataApi, setDataAPI] = useState([]);
+  const handleLogout = () => {
+    // Remove the token from localStorage (or sessionStorage/cookies)
+    localStorage.removeItem('token');
 
-  // const getapi = async () => {
-  //   try {
-  //     const responseData = await axios.get("http://localhost:3244/api/data");
-  //     if(responseData.status===500){
-  //       alert(responseData.data)
-  //     }else{
-  //       setDataAPI(responseData.data);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //     alert('Error fetching data: ' + error.message);
-  //   }
-  // };
-
-  // // ใช้ useEffect เพื่อเรียก getapi หนึ่งครั้งเมื่อคอมโพเนนต์โหลด
-  // useEffect(() => {
-  //   getapi();
-  // }, []); // [] ทำให้ useEffect ทำงานเพียงครั้งเดียว
+    // Redirect to login page
+    window.location.href = '/'; // Or use navigate('/') if inside a Router context
+  };
 
   return (
     <header className="flex justify-between items-center p-6 bg-gray-800 text-white">
@@ -31,10 +18,26 @@ function AppHeader() {
       </div>
       <nav>
         <ul className="flex space-x-6">
-          <li><a href="/Trend_child" className="hover:text-orange-400 Trend_child">Trend child</a></li>
-          <li><a href="#about" className="hover:text-orange-400">Training program</a></li>
-          <li><a href="#services" className="hover:text-orange-400">Services</a></li>
-          <li><a href="#contact" className="hover:text-orange-400">Contact</a></li>
+          <li>
+            <Button to="/Trend_child" className="hover:text-orange-400">
+              Trend child
+            </Button>
+          </li>
+          <li>
+            <Button to="/Trainprogram" className="hover:text-orange-400">
+              Training program
+            </Button>
+          </li>
+          <li>
+            <Button to="/Admin-dashboard" className="hover:text-orange-400">
+              Services
+            </Button>
+          </li>
+          <li>
+            <Button onClick={handleLogout} className="hover:text-orange-400">
+              Logout
+            </Button>
+          </li>
         </ul>
       </nav>
     </header>

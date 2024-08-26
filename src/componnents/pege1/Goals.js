@@ -40,7 +40,7 @@ const Popup = () => {
             {isOpen && (
                 <div className="overlay">
                     <div className="popup">
-                        <h2>กรอกข้อมูล</h2>
+                        <h2>เป้าหมาย</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="first_name">First Name : </label>
