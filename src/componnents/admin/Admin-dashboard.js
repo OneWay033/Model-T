@@ -2,31 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AppHeader from "../AppHeader";
 
-function AdminDashboard() {
+function AdminDashboard(props) {
   const [data, setData] = useState([]);
-
-  useEffect(() => {
-    // Get the token and userId from localStorage
-    const token = localStorage.getItem('token');
+useEffect(() => {
+  const token = localStorage.getItem('token');
   
-    // Set up the Axios request with the token in the headers
-    axios({
-      method: 'get',
-      url: 'http://localhost:3244/api/trainers', // เรียกใช้งาน API ของคุณ
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => {
-      // Update the state with the fetched data
-      setData(response.data);
-    })
-    .catch(error => {
-      console.error('There was an error fetching the data!', error);
-    });
-  }, []);
-  
+  axios({
+    method: 'get',
+    url: 'http://localhost:3244/api/trainers',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+  })
+  .then(response => {
+    console.log('API Response:', response.data); // Log the response data
+    setData(response.data);
+  })
+  .catch(error => {
+    console.error('There was an error fetching the data!', error);
+  });
+}, []);
   // Handlers for button actions
   const handleEdit = (id) => {
     console.log(`Edit trainer with ID: ${id}`);
@@ -47,6 +43,7 @@ function AdminDashboard() {
     <>
       <AppHeader />
       <nav>
+        
       </nav>
       <p className="title">My Trainer</p>
   
@@ -66,22 +63,16 @@ function AdminDashboard() {
                 <td>{`${item.first_name} ${item.last_name}`}</td>
                 <td className="py-3 px-2 border-b text-center space-x-2"> {/* Adjust width and alignment here */}
                   <button 
-                    onClick={() => handleEdit(item.trainer_id)} 
-                    className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600 transition duration-300"
-                  >
-                    เป้าหมาย
-                  </button>
-                  <button 
                     onClick={() => handleDelete(item.trainer_id)} 
                     className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 transition duration-300"
                   >
-                    สถิติ
+                    ลบ
                   </button>
                   <button 
                     onClick={() => handleView(item.trainer_id)} 
                     className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-600 transition duration-300"
                   >
-                    โปรแกรมเทรน
+                    แก้ไข
                   </button>
                 </td>
               </tr>

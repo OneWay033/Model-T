@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Popup.css'; // Your custom CSS file
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toastify
 import axios from 'axios';
 
-const Addclients = () => {
-    const [isOpen, setIsOpen] = useState(false);
+const Edit_clients = ({ clientToEdit, onClose }) => {
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
-        gender: '',
         phone: '',
         address: '',
         age: '' // Add age to formData
@@ -17,8 +15,17 @@ const Addclients = () => {
 
     const [errors, setErrors] = useState({});
 
-    const openPopup = () => setIsOpen(true);
-    const closePopup = () => setIsOpen(false);
+    useEffect(() => {
+        if (clientToEdit) {
+            setFormData({
+                first_name: clientToEdit.first_name || '',
+                last_name: clientToEdit.last_name || '',
+                phone: clientToEdit.phone || '',
+                address: clientToEdit.address || '',
+                age: clientToEdit.age || '' // Include age if present
+            });
+        }
+    }, [clientToEdit]);
 
     const handleChange = (e) => {
         setFormData({
@@ -31,7 +38,6 @@ const Addclients = () => {
         const newErrors = {};
         if (!formData.first_name) newErrors.first_name = 'First Name is required';
         if (!formData.last_name) newErrors.last_name = 'Last Name is required';
-        if (!formData.gender) newErrors.gender = 'Gender is required';
         if (!formData.phone) newErrors.phone = 'Phone number is required';
         if (!formData.address) newErrors.address = 'Address is required';
         if (!formData.age || isNaN(formData.age)) newErrors.age = 'Valid age is required'; // Validate age
@@ -48,46 +54,44 @@ const Addclients = () => {
                 const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
                 const userId = localStorage.getItem('user_id'); // Get the userid from localStorage
 
-                // Add userid to the formData
+                // Prepare data for update
                 const updatedFormData = {
                     ...formData,
-                    userid: userId,
+                    userId: userId
                 };
 
-                const response = await axios.post(
-                    'http://localhost:3244/api/clients',
-                    updatedFormData,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json',
-                        },
-                    }
-                );
+                // Use PUT request if clientToEdit exists
+                const endpoint = clientToEdit ? 
+                    `http://localhost:3244/api/clients/${clientToEdit.client_id}` :
+                    'http://localhost:3244/api/clients';
+
+                const response = await axios.put(endpoint, updatedFormData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
 
                 // Show success message
-                toast.success('Trainee added successfully!');
+                toast.success('Client information updated successfully!');
                 console.log(response.data);
 
-                closePopup();
+                onClose(); // Close the popup after success
             } catch (error) {
                 // Show error message
-                toast.error('Failed to add trainee. Please try again.');
+                toast.error('Failed to update client information. Please try again.');
                 console.error(error);
             }
         }
     };
 
     return (
-        <div className="m-1">
-            <button onClick={openPopup} className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
-                Add Trainee
-            </button>
-            {isOpen && (
+        <>
+            {clientToEdit && (
                 <div className="overlay fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
                     <div className="popup bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
                         <h2 className="text-2xl font-extrabold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2">
-                            กรอกข้อมูล
+                            Edit Client Information
                         </h2>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group mb-4">
@@ -113,21 +117,6 @@ const Addclients = () => {
                                     className="w-full p-3 border border-gray-300 rounded-md"
                                 />
                                 {errors.last_name && <span className="text-red-500">{errors.last_name}</span>}
-                            </div>
-                            <div className="form-group mb-4">
-                                <label htmlFor="gender" className="block text-gray-700 font-medium mb-1">เพศ:</label>
-                                <select
-                                    id="gender"
-                                    name="gender"
-                                    value={formData.gender}
-                                    onChange={handleChange}
-                                    className="w-full p-3 border border-gray-300 rounded-md"
-                                >
-                                    <option value="">เลือกเพศ</option>
-                                    <option value="male">ชาย</option>
-                                    <option value="female">หญิง</option>
-                                </select>
-                                {errors.gender && <span className="text-red-500">{errors.gender}</span>}
                             </div>
                             <div className="form-group mb-4">
                                 <label htmlFor="phone" className="block text-gray-700 font-medium mb-1">Phone:</label>
@@ -166,11 +155,11 @@ const Addclients = () => {
                                 {errors.age && <span className="text-red-500">{errors.age}</span>}
                             </div>
                             <div className="form-buttons flex justify-end gap-4">
-                                <button type="button" className="cancel bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300" onClick={closePopup}>
-                                    ยกเลิก
+                                <button type="button" className="cancel bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300" onClick={onClose}>
+                                    Cancel
                                 </button>
                                 <button type="submit" className="submit bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
-                                    เสร็จสิ้น
+                                    Update
                                 </button>
                             </div>
                         </form>
@@ -178,8 +167,8 @@ const Addclients = () => {
                 </div>
             )}
             <ToastContainer />
-        </div>
+        </>
     );
 };
 
-export default Addclients;
+export default Edit_clients;

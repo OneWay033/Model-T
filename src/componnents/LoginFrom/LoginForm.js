@@ -19,12 +19,20 @@ export const LoginForm = () => {
       const response = await axios.post('http://localhost:3244/api/login', { username, password });
       if (response.status === 200) {  
         const data = response.data;
+        console.log(response)
         setSuccess('Login successful!');
         const token = data.token;
         localStorage.setItem('token', token);
-        localStorage.setItem('user_id', data.user_id);
-        navigate('/Trend_child');
-        alert('Login successful');
+        localStorage.setItem('user',  JSON.stringify(data.user));
+        localStorage.setItem('userId',  JSON.stringify(data.user.user_id));
+        console.log(data.user.role)
+        if(data.user.role === 'admin'){
+          navigate('/Admin-dashboard'); // Redirect to admin page
+        }
+        else if(data.user.role === 'trainer'){
+          navigate('/Trend_child');
+        }
+          alert('Login successful');
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
